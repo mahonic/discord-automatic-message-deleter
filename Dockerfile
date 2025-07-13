@@ -7,7 +7,7 @@
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
 ARG RUST_VERSION=1.87.0
-ARG APP_NAME=discord-thread-ticket-system
+ARG APP_NAME=discord-automatic-message-deleter
 
 ################################################################################
 # Create a stage for building the application.
@@ -24,6 +24,8 @@ RUN cargo install sqlx-cli
 
 FROM dev AS build
 
+ENV SQLX_OFFLINE=true
+
 # Build the application.
 # Leverage a cache mount to /usr/local/cargo/registry/
 # for downloaded dependencies, a cache mount to /usr/local/cargo/git/db
@@ -35,6 +37,7 @@ FROM dev AS build
 RUN --mount=type=bind,source=src,target=src \
     --mount=type=bind,source=Cargo.toml,target=Cargo.toml \
     --mount=type=bind,source=Cargo.lock,target=Cargo.lock \
+    --mount=type=bind,source=.sqlx/,target=/app/.sqlx/ \
     --mount=type=cache,target=/app/target/ \
     --mount=type=cache,target=/usr/local/cargo/git/db \
     --mount=type=cache,target=/usr/local/cargo/registry/ \

@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                INSERT INTO channel_schedule (guild_id, channel_id, scheduled_by_user_id, max_message_age_hours)\n                VALUES ($1, $2, $3, $4)\n                RETURNING ID\n                ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8",
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "1e5e7198301a0bef4e679c87d8fff1b348e1cb3250857099fbc0ba6dcec7599a"
+}
