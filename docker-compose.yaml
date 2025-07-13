@@ -1,0 +1,39 @@
+#
+services:
+  discord:
+    build:
+      context: .
+      target: final
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    restart: unless-stopped
+  dev:
+    build:
+      context: .
+      target: dev
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    volumes:
+      - "./cargo-db-cache:/usr/local/cargo/git/db"
+      - "./cargo-registry-cache:/usr/local/cargo/registry/"
+      - "./migrations:/app/migrations"
+    restart: no
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    shm_size: 128mb
+    env_file:
+      - .env
+#    ports:
+#      - "127.0.0.1:5432:5432"
+    volumes:
+      - "./db_data:/var/lib/postgresql/data"
+
+
+volumes:
+  cargo-registry-cache:
+  cargo-db-cache:

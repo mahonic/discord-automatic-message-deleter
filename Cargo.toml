@@ -1,0 +1,11 @@
+[package]
+name = "discord-automatic-message-deleter"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serenity = "0.12.4"
+poise = "0.6.1"
+tokio = {version = "1.44.1", features = ["macros", "rt-multi-thread", "signal"]}
+chrono = "0.4.40"
+sqlx = {version = "0.8.3", features = ["runtime-tokio", "postgres", "chrono", "migrate"]}
